@@ -1,0 +1,20 @@
+{
+  "name": "qikdispatch_api",
+  "version": "1.1.0",
+  "description": "REST API - QikDispatch",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "keywords": [
+    "qikDispatch"
+  ],
+  "dependencies": {
+    "express": "latest",
+    "twitter": "1.7.0",
+    "firebase": "3.6.9"
+  },
+  "author": "Team QikDispatch",
+  "license": "ISC"
+}
