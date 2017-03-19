@@ -4,9 +4,7 @@ var config = require('./config');
 
 var app = express()
 
-// app.get('/', function (req, res) {
-//   res.send('Hello World!')
-// })
+app.set('port', (process.env.PORT || 5000));
 
 
 // var router = express.Router(); 
@@ -17,6 +15,6 @@ app.use(`/`, require(`./controllers/twitterController.js`))
 
 // var routes = require('./routes')(app);
 
-app.listen(config.port, function(){
-    console.log('Server %s listening at %s', config.serverName, app.url);
+app.listen(app.get('port'), function(){
+    console.log('Server listening at port %s', app.get('port'));
 });
