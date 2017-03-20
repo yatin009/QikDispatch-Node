@@ -1,6 +1,6 @@
 let router = require(`express`).Router();
 var Twitter = require('twitter');
-var Ticket = require(`../models/Ticket.js`);
+var Ticket = require(`../models/ticket.js`);
 var firebase = require("firebase");
 
 var config = {
