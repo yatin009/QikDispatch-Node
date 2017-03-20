@@ -21,11 +21,11 @@ var client = new Twitter({
 firebase.initializeApp(config);
 var database = firebase.database();
 
-router.get(`/`, function (req, res) {
+router.get(function (req, res) {
     res.send('Hello World!')
 });
 
-router.get(`/get_mention_tweets`, function (req, res, next) {
+router.get(`/get_mention_tweets`, function (req, res) {
     // https://dev.twitter.com/rest/reference/get/statuses/user_timeline
     client.get('statuses/mentions_timeline.json', {
         screen_name: 'nodejs',
