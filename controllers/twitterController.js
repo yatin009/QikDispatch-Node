@@ -21,7 +21,7 @@ var client = new Twitter({
 firebase.initializeApp(config);
 var database = firebase.database();
 
-router.get(function (req, res) {
+router.get("/", function (req, res) {
     res.send('Hello World!')
 });
 
