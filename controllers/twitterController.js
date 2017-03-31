@@ -1,7 +1,7 @@
-let router = require(`express`).Router();
+let router = require('express').Router();
 var Twitter = require('twitter');
-var Ticket = require(`../models/ticket.js`);
-var firebase = require("firebase");
+var Ticket = require('../models/ticket.js');
+var firebase = require('firebase');
 
 var config = {
     apiKey: "AIzaSyAw8Xle1y6T2p6pu3mst3iJREqgDmFFj_A",
@@ -25,7 +25,7 @@ router.get("/", function (req, res) {
     res.send('Hello World!')
 });
 
-router.get(`/get_mention_tweets`, function (req, res) {
+router.get('/get_mention_tweets', function (req, res) {
     // https://dev.twitter.com/rest/reference/get/statuses/user_timeline
     client.get('statuses/mentions_timeline.json', {
         screen_name: 'nodejs',
@@ -46,7 +46,7 @@ function checkDBForOldTweets(tweets, res) {
     var fTicketTweet = [];
     var ref = database.ref("ticketing");
     // Attach an asynchronous callback to read the data at our posts reference
-    ref.on("value", function (snapshot) {
+    ref.once('value', function (snapshot) {
         snapshot.forEach(function (childSnap) {
             var tweetSnap = childSnap.val();
             if (tweetSnap.tweetId) {
@@ -85,7 +85,8 @@ function createTicket(fTicketTweet, res) {
         );
 
     })
-    res.status(200).send('Success from tweets');
+    res.status(200)
+    res.send('Success from tweets');
 }
 
 module.exports = router;
