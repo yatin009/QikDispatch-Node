@@ -18,12 +18,12 @@ function Ticket(tweet, imageURL) {
     this.issue = tweet.text;
 }
 
-function Ticket(date, image_url, id, msg) {
+function Ticket(date, image_url, id, msg, lat, lng) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = date; //tweet.created_at; //Add dateTime
     this.issueImage = image_url; //tweet.media[0].media_url; // Add image link
-    this.lat = 43.7854;
-    this.lng = -79.2265;
+    this.lat = lat;//43.7854;
+    this.lng = lng;//-79.2265;
     this.priority = "High";
     this.requestorId = "";
     this.searchKeyword = "";

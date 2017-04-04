@@ -154,7 +154,14 @@
       "translator_type": "none"
     },
     "geo": nusll,
-    "coordinates": null,
+    "coordinates": {
+      "coordinates":
+      [
+        -75.14310264,
+        40.05701649
+      ],
+      "type":"Point"
+    },
     "place": {
       "id": "2740624a2d391c5c",
       "url": "https://api.twitter.com/1.1/geo/id/2740624a2d391c5c.json",

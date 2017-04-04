@@ -67,15 +67,24 @@ function checkDBForOldTweets(tweets, res) {
 function createTicket(fTicketTweet, res) {
     var tickets = [];
     fTicketTweet.forEach(function (childTweet) {
-        var imageURL = "";
+        var imageURL = "", lat, lng;
         if (childTweet.entities.media) {
             imageURL = childTweet.entities.media[0].media_url;
+        }
+        if (childTweet.coordinates && childTweet.coordinates.coordinates) {
+            lng = childTweet.coordinates.coordinates[0]
+            lat = childTweet.coordinates.coordinates[1];
+        } else {
+            lat = 43.7854;
+            lng = -79.2265;
         }
         tickets.push(new Ticket(
             childTweet.created_at,
             imageURL,
             childTweet.id_str,
-            childTweet.text))
+            childTweet.text,
+            lat,
+            lng))
     });
     tickets.forEach(function (ticket) {
         var newPostKey = database.ref("ticketing").push().key;
