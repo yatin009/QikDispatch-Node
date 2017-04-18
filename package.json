@@ -13,7 +13,7 @@
   "dependencies": {
     "express": "latest",
     "twitter": "1.7.0",
-    "firebase": "3.6.9"
+    "firebase-admin": "4.2.1"
   },
   "author": "Team QikDispatch",
   "license": "ISC"

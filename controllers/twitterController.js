@@ -1,17 +1,17 @@
 let router = require('express').Router();
 var Twitter = require('twitter');
 var Ticket = require('../models/ticket.js');
-var firebase = require('firebase');
+var admin = require('firebase-admin');
 
 
-var config = {
-    apiKey: "AIzaSyCg2T_aFhlzdkUr6P6uespjRjqjSzLeKjo",
-    authDomain: "qikdispatch-dev.firebaseapp.com",
-    databaseURL: "https://qikdispatch-dev.firebaseio.com",
-    projectId: "qikdispatch-dev",
-    storageBucket: "qikdispatch-dev.appspot.com",
-    messagingSenderId: "888975173548"
-};
+// Fetch the service account key JSON file contents
+var serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
+
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://qikdispatch-dev.firebaseio.com/"
+});
 
 // Ticketing-DEV
 // var config = {
@@ -23,14 +23,21 @@ var config = {
 // };
 
 var client = new Twitter({
-    consumer_key: 'YW4MyUnbuiyQFmpiU4AeilHRD' ,//'9kRe4r7PJbiHwkoVK1KkOFG95',
-    consumer_secret: 'PfH64R8HP7N2ivKykkUP8u8JYZGpUqg2EQlzYVy04YCZbuY3gX',//'mG1NPIj3S4vucIQ09gBgvcDBtvnbflxOclVe2HKMOZvllocey7',
-    access_token_key: '832350932730015745-KAFttBaaCHyWQzHNuo2X3s0qoHAOyYS',//'833049257527619584-NUz5QHsBuqjQsGZ8hdt1ZC4xZwrJCu5',
-    access_token_secret: 'AOMjMa7wk1UxXRHJCabFNuoWfF15yuIfNvNXfWFjfqh5F',//'PJKa242M2wnfRGN6XZhsEaqaK8jxpYyre00xtkitZse97'
+    consumer_key: 'lxM4lEOBEQ2gXeTw9Eo2Pl9To' ,
+    consumer_secret: 'pimTKJmL1CT8nziAeL8h4nQOsBYdOlucewDQQZLhWOz9AXWXHe',
+    access_token_key: '832350932730015745-XV8V2QHVNGfzzVO4VMEE86QnqKH9EUf',
+    access_token_secret: 'XA9IdAWpF4KIfHktU5CM4zT1g6KhbMr3nHR4dSqldpSUf',
 });
 
-firebase.initializeApp(config);
-var database = firebase.database();
+// Yatin-DEV twitter credentials
+// var client = new Twitter({
+//     consumer_key: '9kRe4r7PJbiHwkoVK1KkOFG95',
+//     consumer_secret: 'mG1NPIj3S4vucIQ09gBgvcDBtvnbflxOclVe2HKMOZvllocey7',
+//     access_token_key: '833049257527619584-NUz5QHsBuqjQsGZ8hdt1ZC4xZwrJCu5',
+//     access_token_secret: 'PJKa242M2wnfRGN6XZhsEaqaK8jxpYyre00xtkitZse97'
+// });
+
+var database = admin.database();
 
 router.get("/", function (req, res) {
     res.send('Hello World!')
@@ -43,7 +50,12 @@ router.get('/get_mention_tweets', function (req, res) {
         count: 20
     }, function (error, tweets, response) {
         if (!error) {
-            checkDBForOldTweets(tweets, res)
+            if(tweets.length>0) {
+                checkDBForOldTweets(tweets, res)
+            }else{
+                res.status(200)
+                res.send('No mention tweets');
+            }
         } else {
             res.status(500).json({
                 error: error
@@ -69,9 +81,16 @@ function checkDBForOldTweets(tweets, res) {
                 fTicketTweet.push(childTweet);
             }
         });
-        createTicket(fTicketTweet, res);
+        if(fTicketTweet.length>0) {
+            createTicket(fTicketTweet, res);
+        }else{
+            res.status(200)
+            res.send('No new tweets');
+        }
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
+        res.status(402)
+        res.send(errorObject.code);
     });
 }
 
@@ -100,13 +119,13 @@ function createTicket(fTicketTweet, res) {
     tickets.forEach(function (ticket) {
         var newPostKey = database.ref("ticketing").push().key;
         ticket.ticketKey = newPostKey;
-        firebase.database().ref("ticketing/" + newPostKey).set(
+        admin.database().ref("ticketing/" + newPostKey).set(
             ticket
         );
 
     })
     res.status(200)
-    res.send('Success from tweets');
+    res.send('Tickets created from new tweet '+fTicketTweet.length);
 }
 
 module.exports = router;

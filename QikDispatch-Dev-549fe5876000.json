@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "qikdispatch-dev",
+  "private_key_id": "549fe587600064cc82272d41e918978ba5afe117",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC7alU2WZG2AUi2\ny7F34a70PgPz1j7cgfgQQ/XFZiimOJdAueTzI3HFYmyq2nor5bqogKL8b9XqyQ1p\nz90MLgqojdnnYXFD6tf49rR+bVD64bdJH8G29+g+BRXRv/WDukFUZReCA6Xxdk7V\noYpyaLONi7TNmQwW+XTV7phI/39TMGo3UQichHp+/21PBKoCDleCpqwZ2/vtzQ8O\nOZXv/NFh1VuVmq5ybHz5w1puiQn5IwlaUHaiWsmiXPnNZYNBYIDJmoB2EBalYx7j\nncYZJ0LhTqoC294HH5aeoQjcaoGnzhNgz3ED1HvqRPbjNK6slfvU1qGNPguUxLxm\nCO6as/N5AgMBAAECggEAI5SKXOkgSqdvwJRnOtUzu9bSNUalZIOgLqZYUIOWkAgK\nXxVrq+U8wjZvXvhfXVod18OkLbylpg9JZp853ggXqexURCMxt60sF23u0lm6mAam\nH1HSGwRxqOSaQdnpqHqB0J3ompxKss69JL2oZRQPkn3Fc4rsyqfNUJgdfS5UY9xn\n87vJ6OV8qQtqKyZFubB6jHGbddmUnuGC1ZFloUujkFOe2xH9GcOf27GEIAGebXq9\njexOFog9GpKkNQiLomjK/WGV19IQpNzt/qzvCddzIFEyShEI8xP3R0e2rNIdoMun\nthVoitVXsjSKdqq4oQA0eDUZjf0D7kDF6ARMZygVAQKBgQDjXAqd7nqoXKu/6reP\nIa6Vqaw9XmxxXTQhSulx009r/ZJBB3Cq5oE0WIgqh32rASuoS4OaptBFFQ96fmwh\nv9MwPUrDBM12p327DJmJRiPVp3DCN6v59760pa+R0+9JQhtc9Kfd0fweZ1+pvMKu\n1C1QyhVa2qJvAQqJWAF/WRjaqQKBgQDTBijgr8d0F997tgSUOzsrTGdHXKTH6VDr\npFzfilGHjDIAc5AwKMWD0aM4bjsDy/OyB3pvCe/r0vn8af6s9Q3M3ItCnnyt7EBG\nV8I8xGUO1KD9VK+vTV/DqOJdDk75S0s/qo66PfIn8Szj5wHgqJ2O2FqcBbiVZATY\nDccl778kUQKBgQCbVRvv0Km+cynoQc1NHb7wg26osuU2Am6GPG8HlE4Twrd0dEfW\niwtFHyNQoycJeRBBt+3e8A8k04Gyt8Lav/riX02/tX1GjqII9E/FiMUcyHvyRSTa\n8Bc7xmMQJ5K5I1Acjw5NL5SnlQq3pb4Awfd/1cEHRI5rdnOjaBwFzHJ9mQKBgCqb\n9ssPkzV00JJZOWl44ESo4728DiWzjbxW7s3QTxAQldQTgYzH3sH0JYHyeAYXO3i6\nG9Wp6wDyE7oM6PihbozsB06HU+OGbaAGfljoywMImg0s+WBrPifyxOpHRlj+BA6x\n8KnYcjnwb8EA1xc21MGQHBOe8BtyG6xIc+rMEwtRAoGARbarpzc4n9xiCJ8aaXu3\nnrj6lS1EsZH85f0hQ3xztJS5mQz3V+T2Oxej9E6+i7efD1mzkzbbr0V4emzaM1Eh\nHXYL1H4oGXr8MM9PmFExe+gKl4Wb8w+Ibahz8Yf2vTiq/z3NvMTQK50D7vNRnWSS\nnZQaZhQrFAWO5eIM0h8MIbE=\n-----END PRIVATE KEY-----\n",
+  "client_email": "qikdispatch-twitter@qikdispatch-dev.iam.gserviceaccount.com",
+  "client_id": "111344065986298108640",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/qikdispatch-twitter%40qikdispatch-dev.iam.gserviceaccount.com"
+}
