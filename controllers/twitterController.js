@@ -3,19 +3,30 @@ var Twitter = require('twitter');
 var Ticket = require('../models/ticket.js');
 var firebase = require('firebase');
 
+
 var config = {
-    apiKey: "AIzaSyAw8Xle1y6T2p6pu3mst3iJREqgDmFFj_A",
-    authDomain: "ticketing-dev-87f05.firebaseapp.com",
-    databaseURL: "https://ticketing-dev-87f05.firebaseio.com",
-    storageBucket: "ticketing-dev-87f05.appspot.com",
-    messagingSenderId: "625155435074"
+    apiKey: "AIzaSyCg2T_aFhlzdkUr6P6uespjRjqjSzLeKjo",
+    authDomain: "qikdispatch-dev.firebaseapp.com",
+    databaseURL: "https://qikdispatch-dev.firebaseio.com",
+    projectId: "qikdispatch-dev",
+    storageBucket: "qikdispatch-dev.appspot.com",
+    messagingSenderId: "888975173548"
 };
 
+// Ticketing-DEV
+// var config = {
+//     apiKey: "AIzaSyAw8Xle1y6T2p6pu3mst3iJREqgDmFFj_A",
+//     authDomain: "ticketing-dev-87f05.firebaseapp.com",
+//     databaseURL: "https://ticketing-dev-87f05.firebaseio.com",
+//     storageBucket: "ticketing-dev-87f05.appspot.com",
+//     messagingSenderId: "625155435074"
+// };
+
 var client = new Twitter({
-    consumer_key: '9kRe4r7PJbiHwkoVK1KkOFG95',
-    consumer_secret: 'mG1NPIj3S4vucIQ09gBgvcDBtvnbflxOclVe2HKMOZvllocey7',
-    access_token_key: '833049257527619584-NUz5QHsBuqjQsGZ8hdt1ZC4xZwrJCu5',
-    access_token_secret: 'PJKa242M2wnfRGN6XZhsEaqaK8jxpYyre00xtkitZse97'
+    consumer_key: 'YW4MyUnbuiyQFmpiU4AeilHRD' ,//'9kRe4r7PJbiHwkoVK1KkOFG95',
+    consumer_secret: 'PfH64R8HP7N2ivKykkUP8u8JYZGpUqg2EQlzYVy04YCZbuY3gX',//'mG1NPIj3S4vucIQ09gBgvcDBtvnbflxOclVe2HKMOZvllocey7',
+    access_token_key: '832350932730015745-KAFttBaaCHyWQzHNuo2X3s0qoHAOyYS',//'833049257527619584-NUz5QHsBuqjQsGZ8hdt1ZC4xZwrJCu5',
+    access_token_secret: 'AOMjMa7wk1UxXRHJCabFNuoWfF15yuIfNvNXfWFjfqh5F',//'PJKa242M2wnfRGN6XZhsEaqaK8jxpYyre00xtkitZse97'
 });
 
 firebase.initializeApp(config);
