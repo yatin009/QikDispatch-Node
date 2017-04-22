@@ -1,16 +1,18 @@
+var RequesterData = require('../models/requesterData.js');
+
 function Ticket(tweet, imageURL) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = tweet.created_at; //Add dateTime
     this.issueImage = imageURL;
     this.lat = 43.7854;
     this.lng = -79.2265;
-    this.priority = "High";
+    this.priority = "HIGH";
     this.requestorId = "";
     this.searchKeyword = "";
     this.status = "Incoming";
     this.ticketKey = "";
     this.ticketNumber = "";
-    // null parameters
+// null parameters
     this.requestor = null
     this.approverId = null;
     this.contractorId = null;
@@ -24,14 +26,14 @@ function Ticket(date, image_url, id, msg, lat, lng) {
     this.issueImage = image_url; //tweet.media[0].media_url; // Add image link
     this.lat = lat;//43.7854;
     this.lng = lng;//-79.2265;
-    this.priority = "High";
+    this.priority = "HIGH";
     this.requestorId = "";
     this.searchKeyword = "";
     this.status = "Incoming";
     this.ticketKey = "";
     this.ticketNumber = "";
+    this.requester = new RequesterData(msg)
     // null parameters
-    this.requestor = null
     this.approverId = null;
     this.contractorId = null;
     this.tweetId = id; //tweet.id_str;
@@ -51,7 +53,7 @@ Ticket.prototype.toJSONString = function () {
         status: this.status,
         ticketKey: this.ticketKey,
         ticketNumber: this.ticketNumber,
-        requestor: [],
+        requester: this.requester.print(),
         approverId: this.approverId,
         contractorId: this.contractorId,
         tweetId: this.tweetId,
