@@ -3,7 +3,7 @@ var RequesterData = require('../models/requesterData.js');
 function Ticket(tweet, imageURL) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = tweet.created_at; //Add dateTime
-    this.issueImage = imageURL;
+    this.issueImageName = imageURL;
     this.lat = 43.7854;
     this.lng = -79.2265;
     this.priority = "HIGH";
@@ -20,10 +20,10 @@ function Ticket(tweet, imageURL) {
     this.issue = tweet.text;
 }
 
-function Ticket(date, image_url, id, msg, lat, lng) {
+function Ticket(date, image_url, id, msg, lat, lng, address, city) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = date; //tweet.created_at; //Add dateTime
-    this.issueImage = image_url; //tweet.media[0].media_url; // Add image link
+    this.issueImageName = image_url; //tweet.media[0].media_url; // Add image link
     this.lat = lat;//43.7854;
     this.lng = lng;//-79.2265;
     this.priority = "HIGH";
@@ -32,7 +32,7 @@ function Ticket(date, image_url, id, msg, lat, lng) {
     this.status = "Incoming";
     this.ticketKey = "";
     this.ticketNumber = "";
-    this.requester = new RequesterData(msg)
+    this.requester = new RequesterData(msg, address, city)
     // null parameters
     this.approverId = null;
     this.contractorId = null;
@@ -44,7 +44,7 @@ Ticket.prototype.toJSONString = function () {
     return JSON.stringify({
         agentId: this.agentId,
         dateTime: this.dateTime,
-        issueImage: this.issueImage,
+        issueImageName: this.issueImageName,
         lat: this.lat,
         lng: this.lng,
         priority: this.priority,

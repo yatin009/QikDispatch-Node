@@ -2,6 +2,17 @@ let router = require('express').Router();
 var Twitter = require('twitter');
 var Ticket = require('../models/ticket.js');
 var admin = require('firebase-admin');
+var NodeGeocoder = require('node-geocoder');
+
+var options = {
+    provider: 'google',
+
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    formatter: null         // 'gpx', 'string', ...
+};
+
+var geocoder = NodeGeocoder(options);
 
 
 // Fetch the service account key JSON file contents
@@ -13,7 +24,7 @@ admin.initializeApp({
     databaseURL: "https://qikdispatch-dev.firebaseio.com/"
 });
 
-// Ticketing-DEV
+// Ticketing-DEV firebase
 // var config = {
 //     apiKey: "AIzaSyAw8Xle1y6T2p6pu3mst3iJREqgDmFFj_A",
 //     authDomain: "ticketing-dev-87f05.firebaseapp.com",
@@ -23,7 +34,7 @@ admin.initializeApp({
 // };
 
 var client = new Twitter({
-    consumer_key: 'lxM4lEOBEQ2gXeTw9Eo2Pl9To' ,
+    consumer_key: 'lxM4lEOBEQ2gXeTw9Eo2Pl9To',
     consumer_secret: 'pimTKJmL1CT8nziAeL8h4nQOsBYdOlucewDQQZLhWOz9AXWXHe',
     access_token_key: '832350932730015745-XV8V2QHVNGfzzVO4VMEE86QnqKH9EUf',
     access_token_secret: 'XA9IdAWpF4KIfHktU5CM4zT1g6KhbMr3nHR4dSqldpSUf',
@@ -50,9 +61,9 @@ router.get('/get_mention_tweets', function (req, res) {
         count: 20
     }, function (error, tweets, response) {
         if (!error) {
-            if(tweets.length>0) {
+            if (tweets.length > 0) {
                 checkDBForOldTweets(tweets, res)
-            }else{
+            } else {
                 res.status(200)
                 res.send('No mention tweets');
             }
@@ -81,9 +92,9 @@ function checkDBForOldTweets(tweets, res) {
                 fTicketTweet.push(childTweet);
             }
         });
-        if(fTicketTweet.length>0) {
+        if (fTicketTweet.length > 0) {
             createTicket(fTicketTweet, res);
-        }else{
+        } else {
             res.status(200)
             res.send('No new tweets');
         }
@@ -97,24 +108,48 @@ function checkDBForOldTweets(tweets, res) {
 function createTicket(fTicketTweet, res) {
     var tickets = [];
     fTicketTweet.forEach(function (childTweet) {
-        var imageURL = "", lat, lng;
+        var imageURL = null, lat, lng;
         if (childTweet.entities.media) {
             imageURL = childTweet.entities.media[0].media_url;
         }
         if (childTweet.coordinates && childTweet.coordinates.coordinates) {
             lng = childTweet.coordinates.coordinates[0]
             lat = childTweet.coordinates.coordinates[1];
-        } else {
+            geocoder.reverse({lat: lat, lon: lng})
+                .then(function (res) {
+                    var geoTicket = new Ticket(
+                        childTweet.created_at,
+                        imageURL,
+                        childTweet.id_str,
+                        childTweet.text,
+                        lat,
+                        lng,
+                        res[0].formattedAddress,
+                        res[0].city);
+
+                    var newPostKey = database.ref("ticketing").push().key;
+                    geoTicket.ticketKey = newPostKey;
+                    admin.database().ref("ticketing/" + newPostKey).set(
+                        geoTicket
+                    );
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        }
+        else {
             lat = 43.7854;
             lng = -79.2265;
+            tickets.push(new Ticket(
+                childTweet.created_at,
+                imageURL,
+                childTweet.id_str,
+                childTweet.text,
+                lat,
+                lng,
+                "Dummy Address",
+                "Dummy City"))
         }
-        tickets.push(new Ticket(
-            childTweet.created_at,
-            imageURL,
-            childTweet.id_str,
-            childTweet.text,
-            lat,
-            lng))
     });
     tickets.forEach(function (ticket) {
         var newPostKey = database.ref("ticketing").push().key;
@@ -125,7 +160,7 @@ function createTicket(fTicketTweet, res) {
 
     })
     res.status(200)
-    res.send('Tickets created from new tweet '+fTicketTweet.length);
+    res.send('Tickets created from new tweet ' + fTicketTweet.length);
 }
 
 module.exports = router;

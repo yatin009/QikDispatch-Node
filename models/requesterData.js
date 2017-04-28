@@ -1,11 +1,11 @@
 /**
  * Created by yatin on 18/04/17.
  */
-function RequesterData(msg) {
+function RequesterData(msg, address, city) {
     this.issue = msg;
     this.priority = "HIGH";
-    this.location = "Dummy location";
-    this.city = "Dummy city"
+    this.location = address;
+    this.city = city
 }
 
 RequesterData.prototype.toJSONString = function () {
