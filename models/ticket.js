@@ -1,4 +1,6 @@
 var RequesterData = require('../models/requesterData.js');
+var TicketTimeline = require('../models/TicketTimeline.js');
+
 
 function Ticket(tweet, imageURL) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
@@ -12,6 +14,7 @@ function Ticket(tweet, imageURL) {
     this.status = "Incoming";
     this.ticketKey = "";
     this.ticketNumber = "";
+    this.ticketTimelines = new TicketTimeline();
 // null parameters
     this.requestor = null
     this.approverId = null;
@@ -33,12 +36,35 @@ function Ticket(date, image_url, id, msg, lat, lng, address, city) {
     this.ticketKey = "";
     this.ticketNumber = "";
     this.requester = new RequesterData(msg, address, city)
+    this.ticketTimelines = ticketTimeline;
     // null parameters
     this.approverId = null;
     this.contractorId = null;
     this.tweetId = id; //tweet.id_str;
     this.issue = msg; //tweet.text;
 }
+
+var ticketTimeline = {
+    "0": new TicketTimeline("Incoming", "COMPLETED"),
+    "1": new TicketTimeline("Assigned", "PENDING"),
+    "2": new TicketTimeline("Approver Assigned", "PENDING"),
+    "3": new TicketTimeline("Approved", "PENDING"),
+    "4": new TicketTimeline("Scheduled", "PENDING"),
+    "5": new TicketTimeline("Work Completed", "PENDING"),
+    "6": new TicketTimeline("WorkRated", "PENDING")
+}
+
+// function TicketTimelines() {
+//     var ticketTimeline = new Array();
+//     ticketTimeline.push(new TicketTimeline("Incoming", "COMPLETED"));
+//     ticketTimeline.push(new TicketTimeline("Assigned", "PENDING"));
+//     ticketTimeline.push(new TicketTimeline("Approver Assigned", "PENDING"));
+//     ticketTimeline.push(new TicketTimeline("Approved", "PENDING"));
+//     ticketTimeline.push(new TicketTimeline("Scheduled", "PENDING"));
+//     ticketTimeline.push(new TicketTimeline("Work Completed", "PENDING"));
+//     ticketTimeline.push(new TicketTimeline("WorkRated", "PENDING"));
+//     return ticketTimeline;
+// }
 
 Ticket.prototype.toJSONString = function () {
     return JSON.stringify({
@@ -56,6 +82,7 @@ Ticket.prototype.toJSONString = function () {
         requester: this.requester.print(),
         approverId: this.approverId,
         contractorId: this.contractorId,
+        ticketTimelines: this.ticketTimelines,
         tweetId: this.tweetId,
         issue: this.issue
     });
