@@ -1,5 +1,5 @@
 var RequesterData = require('../models/requesterData.js');
-var TicketTimeline = require('../models/TicketTimeline.js');
+var TicketTimeline = require('../models/ticketTimeline.js');
 
 
 function Ticket(tweet, imageURL) {

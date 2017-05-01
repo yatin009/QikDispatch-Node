@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="922bda47-c3f1-42d4-97e8-e8b44356a232" name="Default" comment="" />
+    <list default="true" id="922bda47-c3f1-42d4-97e8-e8b44356a232" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/ticket.js" afterPath="$PROJECT_DIR$/models/ticket.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -55,8 +57,8 @@
       <file leaf-file-name="ticket.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/ticket.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="17">
-              <caret line="1" column="54" lean-forward="false" selection-start-line="1" selection-start-column="54" selection-end-line="1" selection-end-column="54" />
+            <state relative-caret-position="51">
+              <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
               <folding />
             </state>
           </provider>
@@ -370,12 +372,12 @@
       <workItem from="1492536320820" duration="4276000" />
       <workItem from="1493144884089" duration="5166000" />
       <workItem from="1493417834354" duration="615000" />
-      <workItem from="1493609613956" duration="1728000" />
+      <workItem from="1493609613956" duration="1875000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="16350000" />
+    <option name="totallyTimeSpent" value="16497000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="4" y="23" width="1436" height="877" extended-state="6" />
@@ -759,8 +761,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/models/ticket.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="54" lean-forward="false" selection-start-line="1" selection-start-column="54" selection-end-line="1" selection-end-column="54" />
+        <state relative-caret-position="51">
+          <caret line="3" column="0" lean-forward="true" selection-start-line="3" selection-start-column="0" selection-end-line="3" selection-end-column="0" />
           <folding />
         </state>
       </provider>
