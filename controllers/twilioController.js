@@ -71,7 +71,7 @@ function checkDBForOldMessage(messages, res) {
             }
         });
         messages.forEach(function (childMessage) {
-            if (fMessagesid.indexOf(childMessage.id_str) == -1) {
+            if (fMessagesid.indexOf(childMessage.sid) == -1) {
                 fTicketMessage.push(childMessage);
             }
         });
