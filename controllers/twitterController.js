@@ -68,9 +68,8 @@ router.get('/get_mention_tweets', function (req, res) {
                 res.send('No mention tweets');
             }
         } else {
-            res.status(500).json({
-                error: error
-            });
+            res.status(500)
+            res.send(error);
         }
     });
 });
