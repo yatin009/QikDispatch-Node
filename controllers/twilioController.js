@@ -9,7 +9,6 @@ var admin = require('firebase-admin');
 var accountSid = 'AC258924160f4455d78e2d2bbb3d320224'; // Your Account SID from www.twilio.com/console
 var authToken = 'a0a2d7315ded3cc86b2d3abcd5177340';   // Your Auth Token from www.twilio.com/console
 
-var twilio = require('twilio');
 var client = new twilio(accountSid, authToken);
 
 // Fetch the service account key JSON file contents
