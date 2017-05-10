@@ -126,12 +126,13 @@ function createTicket(fTicketMessage, res) {
                 lat,
                 lng,
                 "Dummy Address",
-                "Dummy City"))
+                childMessage.from))
         }
     });
     tickets.forEach(function (ticket) {
         var newPostKey = database.ref("ticketing").push().key;
         ticket.ticketKey = newPostKey;
+        sendReply(ticket.requestorId, "","");
         admin.database().ref("ticketing/" + newPostKey).set(
             ticket
         );
@@ -139,6 +140,14 @@ function createTicket(fTicketMessage, res) {
     })
     res.status(200)
     res.send('Tickets created from new tweet ' + fTicketMessage.length);
+}
+
+function sendReply(to, from, body){
+    client.messages.create({
+        body: 'Thank you. A ticket has been created for your reported issue.',
+        to: to,  // Text this number
+        from: '+16479302246' // From a valid Twilio number
+    });
 }
 
 module.exports = router;
