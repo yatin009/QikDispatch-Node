@@ -2,31 +2,42 @@
  * Created by yatin on 06/05/17.
  */
 let router = require('express').Router();
-var Ticket = require('../models/ticket.js');
-var twilio = require('twilio');
-var admin = require('firebase-admin');
+let Ticket = require('../models/twilioTicket.js');
+let twilio = require('twilio');
+let admin = require('firebase-admin');
+let async = require('async');
+let NodeGeocoder = require('node-geocoder');
 
-var accountSid = 'AC258924160f4455d78e2d2bbb3d320224'; // Your Account SID from www.twilio.com/console
-var authToken = 'a0a2d7315ded3cc86b2d3abcd5177340';   // Your Auth Token from www.twilio.com/console
+let options = {
+    provider: 'google',
 
-var client = new twilio(accountSid, authToken);
+    // Optional depending on the providers
+    httpAdapter: 'https', // Default
+    formatter: null         // 'gpx', 'string', ...
+};
+let geocoder = NodeGeocoder(options);
+
+const accountSid = 'AC258924160f4455d78e2d2bbb3d320224'; // Your Account SID from www.twilio.com/console
+const authToken = 'a0a2d7315ded3cc86b2d3abcd5177340';   // Your Auth Token from www.twilio.com/console
+
+const client = new twilio(accountSid, authToken);
 
 // Fetch the service account key JSON file contents
-var serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
+const serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
 
-var database = admin.database();
+const database = admin.database();
 
 router.get("/create_twilio_message", function (req, res) {
     client.messages.create({
         body: 'Hello from Node',
         to: '+1',  // Text this number
         from: '+16479302246' // From a valid Twilio number
-    }, function(err, message) {
-        if(!err){
+    }, function (err, message) {
+        if (!err) {
             res.status(200)
             res.send('Message Sent');
             console.log(message.sid);
-        }else{
+        } else {
             res.status(err.status);
             res.send(err)
         }
@@ -36,27 +47,55 @@ router.get("/create_twilio_message", function (req, res) {
 
 router.get("/get_twilio_message", function (req, res) {
     var messages = []
-    client.messages.list(function(err, data) {
-        if(!err){
-            data.forEach(function(message) {
-                if(message.direction == 'inbound') {
+    client.messages.list(function (err, data) {
+        if (!err) {
+            data.forEach(function (message) {
+                if (message.direction === 'inbound' && message.numMedia > 0) {
                     console.log(message.body);
                     messages.push(message)
                 }
             });
-            if(messages.length>0){
-                checkDBForOldMessage(messages, res)
-            }else {
-                res.status(200)
+            if (messages.length > 0) {
+                filterValidMessage(messages, res);
+            } else {
+                res.status(200);
                 res.send('No new messages');
             }
-        }else{
+        } else {
             res.status(err.status);
             res.send(err)
         }
     });
 });
 
+function filterValidMessage(messages, res) {
+    //TODO invalid messages array not used, to reply back user to message from registerred number.
+    var validMessages = [], invalidMessage = [];
+    let ref = database.ref("building_users");
+    ref.once('value', function (snapshot) {
+        snapshot.forEach(function (childSnap) {
+            var buildUser = childSnap.val();
+            messages.forEach(function (message) {
+                if (message.from.includes(buildUser.contactNumber)) {
+                    message.buildingUser = buildUser;
+                    validMessages.push(message);
+                } else {
+                    invalidMessage.push(message);
+                }
+            });
+        });
+        if (validMessages.length > 0) {
+            checkDBForOldMessage(validMessages, res);
+        } else {
+            res.status(200);
+            res.send('No new Messages');
+        }
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+        res.status(402);
+        res.send(errorObject.code);
+    });
+}
 
 function checkDBForOldMessage(messages, res) {
     var fMessagesid = [];
@@ -76,7 +115,7 @@ function checkDBForOldMessage(messages, res) {
             }
         });
         if (fTicketMessage.length > 0) {
-            createTicket(fTicketMessage, res);
+            downloadMediaUri(fTicketMessage, res);
         } else {
             res.status(200)
             res.send('No new Messages');
@@ -88,61 +127,71 @@ function checkDBForOldMessage(messages, res) {
     });
 }
 
-function createTicket(fTicketMessage, res) {
-    var tickets = [];
-    fTicketMessage.forEach(function (childMessage) {
-        var imageURL = null, location;
-        if (false) {//childTweet.coordinates && childTweet.coordinates.coordinates
-            lng = childTweet.coordinates.coordinates[0]
-            lat = childTweet.coordinates.coordinates[1];
-            geocoder.reverse({lat: lat, lon: lng})
-                .then(function (res) {
-                    var geoTicket = new Ticket(
-                        childTweet.created_at,
-                        imageURL,
-                        childTweet.id_str,
-                        childTweet.text,
-                        lat,
-                        lng,
-                        res[0].formattedAddress,
-                        res[0].city);
+function downloadMediaUri(messages, res) {
+    async.forEachOf(messages, function (message, key, callback) {
+        client.messages(message.sid).media.list(function (err, data) {
+            if (err) {
+                return callback(err);
+            }
 
-                    var newPostKey = database.ref("ticketing").push().key;
-                    geoTicket.ticketKey = newPostKey;
-                    admin.database().ref("ticketing/" + newPostKey).set(
-                        geoTicket
-                    );
-                })
-                .catch(function (err) {
-                    console.log(err);
-                });
-        }  else {
-            lat = 43.7854;
-            lng = -79.2265;
-            tickets.push(new Ticket(
-                childMessage.dateCreated,
-                childMessage.sid,
-                childMessage.body,
-                lat,
-                lng,
-                "Dummy Address",
-                childMessage.from))
+            data.forEach(function (media) {
+                message.imageUri = parseImageUri(media.uri);
+                callback();
+            });
+        });
+    }, function (err) {
+        if (err) {
+            console.error(err.message);
+            res.status(400);
+            res.send(err);
         }
+        ;
+        // configs is now a map of JSON data
+        createTicket(messages, res);
     });
-    tickets.forEach(function (ticket) {
-        var newPostKey = database.ref("ticketing").push().key;
-        ticket.ticketKey = newPostKey;
-        sendReply(ticket.requestorId, "","");
-        admin.database().ref("ticketing/" + newPostKey).set(
-            ticket
-        );
-
-    })
-    res.status(200)
-    res.send('Tickets created from new tweet ' + fTicketMessage.length);
 }
 
-function sendReply(to, from, body){
+function parseImageUri(imageLink) {
+    return "https://api.twilio.com" + imageLink.substring(0, imageLink.length - 5);
+}
+
+function createTicket(fTicketMessage, res) {
+    fTicketMessage.forEach(function (childMessage) {
+        let location = childMessage.buildingUser.unitNumber + ", " + childMessage.buildingUser.address +
+            ", " + childMessage.buildingUser.city + ", " + childMessage.buildingUser.proviance + ", " + childMessage.buildingUser.country;
+
+        geocoder.geocode(location)
+            .then(function (res) {
+                pushTicket(new Ticket(
+                    childMessage.dateCreated + '',
+                    childMessage.sid,
+                    childMessage.body,
+                    res[0].latitude,
+                    res[0].longitude,
+                    res[0].formattedAddress,
+                    childMessage.from,
+                    res[0].city,
+                    childMessage.imageUri));
+                console.log(res);
+            })
+            .catch(function (err) {
+                console.log(err);
+            });
+    });
+    res.status(200)
+    res.send('Tickets created from new messages ' + fTicketMessage.length);
+}
+
+function pushTicket(ticket){
+    let newPostKey = database.ref("ticketing").push().key;
+    ticket.ticketKey = newPostKey;
+    // sendReply(ticket.requestorId, "", "");
+    admin.database().ref("ticketing/" + newPostKey).set(
+        ticket
+    );
+}
+
+function sendReply(to, from, body) {
     client.messages.create({
         body: 'Thank you. A ticket has been created for your reported issue.',
         to: to,  // Text this number

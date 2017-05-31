@@ -11,11 +11,12 @@
     "qikDispatch"
   ],
   "dependencies": {
+    "async": "^2.4.1",
     "express": "latest",
-    "twitter": "1.7.0",
     "firebase-admin": "4.2.1",
     "node-geocoder": "3.16.0",
-    "twilio":"^3.0.0"
+    "twilio": "^3.0.0",
+    "twitter": "1.7.0"
   },
   "author": "Team QikDispatch",
   "license": "ISC"

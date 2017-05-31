@@ -1,6 +1,6 @@
 let router = require('express').Router();
 var Twitter = require('twitter');
-var Ticket = require('../models/ticket.js');
+var Ticket = require('../models/twitterTicket.js');
 var admin = require('firebase-admin');
 var NodeGeocoder = require('node-geocoder');
 
@@ -117,7 +117,7 @@ function createTicket(fTicketTweet, res) {
             geocoder.reverse({lat: lat, lon: lng})
                 .then(function (res) {
                     var geoTicket = new Ticket(
-                        childTweet.created_at,
+                        new Date(childTweet.created_at)+'',
                         imageURL,
                         childTweet.id_str,
                         childTweet.text,
@@ -139,8 +139,9 @@ function createTicket(fTicketTweet, res) {
         else {
             lat = 43.7854;
             lng = -79.2265;
+            var d = new Date(childTweet.created_at)
             tickets.push(new Ticket(
-                childTweet.created_at,
+                d.toLocaleString(),
                 imageURL,
                 childTweet.id_str,
                 childTweet.text,
@@ -160,6 +161,54 @@ function createTicket(fTicketTweet, res) {
     })
     res.status(200)
     res.send('Tickets created from new tweet ' + fTicketTweet.length);
+}
+
+router.get('/test_function', function (req, res) {
+    console.log("test_function Started >> ",new Date()+"")
+    getTicketNumber(function (ticketNumber) {
+        console.log('Ticket number count: ', ticketNumber);
+        if(ticketNumber === -1){
+            return null;
+        }
+        console.log('Ticket number created');
+    });
+    console.log("test_function ended >> ",new Date()+"")
+});
+
+function getTicketNumber(callback) {
+    console.log("getTicketNumber Started >> ",new Date()+"")
+    var ref = database.ref("ticketing");
+    var tickets = [];
+    // Attach an asynchronous callback to read the data at our posts reference
+    ref.once('value', function (snapshot) {
+        snapshot.forEach(function (childSnap) {
+            tickets.push(childSnap.val());
+        });
+        console.log('tickets.length: ', tickets.length);
+        console.log("Response sent >> ",new Date()+"")
+        callback(formatTicketNumber(tickets.length+""));
+        updateAnalytics(tickets);
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+        callback(-1);
+    });
+}
+
+function formatTicketNumber(ticketCount) {
+    if(ticketCount.length === 1){
+        return "0000"+ticketCount;
+    }else if(ticketCount.length === 2){
+        return "000"+ticketCount;
+    }else if(ticketCount.length === 3){
+        return "00"+ticketCount;
+    }else if(ticketCount.length === 4){
+        return "0"+ticketCount;
+    }
+    return ticketCount+"";
+}
+
+function updateAnalytics(tickets){
+    console.log("Update Analytics called >> ",new Date()+"")
 }
 
 module.exports = router;
