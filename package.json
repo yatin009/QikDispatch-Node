@@ -12,6 +12,7 @@
   ],
   "dependencies": {
     "async": "^2.4.1",
+    "dateformat": "^2.0.0",
     "express": "latest",
     "firebase-admin": "4.2.1",
     "node-geocoder": "3.16.0",

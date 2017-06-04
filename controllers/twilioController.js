@@ -7,6 +7,7 @@ let twilio = require('twilio');
 let admin = require('firebase-admin');
 let async = require('async');
 let NodeGeocoder = require('node-geocoder');
+const dateFormat = require('dateformat');
 
 let options = {
     provider: 'google',
@@ -36,7 +37,6 @@ router.get("/create_twilio_message", function (req, res) {
         if (!err) {
             res.status(200)
             res.send('Message Sent');
-            console.log(message.sid);
         } else {
             res.status(err.status);
             res.send(err)
@@ -51,7 +51,6 @@ router.get("/get_twilio_message", function (req, res) {
         if (!err) {
             data.forEach(function (message) {
                 if (message.direction === 'inbound' && message.numMedia > 0) {
-                    console.log(message.body);
                     messages.push(message)
                 }
             });
@@ -163,7 +162,7 @@ function createTicket(fTicketMessage, res) {
         geocoder.geocode(location)
             .then(function (res) {
                 pushTicket(new Ticket(
-                    childMessage.dateCreated + '',
+                    dateFormat(childMessage.dateCreated, "dd-mm-yyyy HH:MM")+"",
                     childMessage.sid,
                     childMessage.body,
                     res[0].latitude,
@@ -172,7 +171,6 @@ function createTicket(fTicketMessage, res) {
                     childMessage.from,
                     res[0].city,
                     childMessage.imageUri));
-                console.log(res);
             })
             .catch(function (err) {
                 console.log(err);

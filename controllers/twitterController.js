@@ -4,6 +4,8 @@ var Ticket = require('../models/twitterTicket.js');
 var admin = require('firebase-admin');
 var NodeGeocoder = require('node-geocoder');
 
+const dateFormat = require('dateformat');
+
 var options = {
     provider: 'google',
 
@@ -14,6 +16,7 @@ var options = {
 
 var geocoder = NodeGeocoder(options);
 
+var tickets = [];
 
 // Fetch the service account key JSON file contents
 var serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
@@ -82,6 +85,7 @@ function checkDBForOldTweets(tweets, res) {
     ref.once('value', function (snapshot) {
         snapshot.forEach(function (childSnap) {
             var tweetSnap = childSnap.val();
+            tickets.push(tweetSnap);
             if (tweetSnap.tweetId) {
                 fTweetsid.push(tweetSnap.tweetId);
             }
@@ -117,7 +121,7 @@ function createTicket(fTicketTweet, res) {
             geocoder.reverse({lat: lat, lon: lng})
                 .then(function (res) {
                     var geoTicket = new Ticket(
-                        new Date(childTweet.created_at)+'',
+                        dateFormat(childTweet.created_at, "dd-mm-yyyy HH:MM")+"",
                         imageURL,
                         childTweet.id_str,
                         childTweet.text,
@@ -139,9 +143,8 @@ function createTicket(fTicketTweet, res) {
         else {
             lat = 43.7854;
             lng = -79.2265;
-            var d = new Date(childTweet.created_at)
             tickets.push(new Ticket(
-                d.toLocaleString(),
+                dateFormat(childTweet.created_at, "dd-mm-yyyy HH:MM")+"",
                 imageURL,
                 childTweet.id_str,
                 childTweet.text,
@@ -186,7 +189,6 @@ function getTicketNumber(callback) {
         });
         console.log('tickets.length: ', tickets.length);
         console.log("Response sent >> ",new Date()+"")
-        callback(formatTicketNumber(tickets.length+""));
         updateAnalytics(tickets);
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
@@ -194,21 +196,77 @@ function getTicketNumber(callback) {
     });
 }
 
-function formatTicketNumber(ticketCount) {
-    if(ticketCount.length === 1){
-        return "0000"+ticketCount;
-    }else if(ticketCount.length === 2){
-        return "000"+ticketCount;
-    }else if(ticketCount.length === 3){
-        return "00"+ticketCount;
-    }else if(ticketCount.length === 4){
-        return "0"+ticketCount;
-    }
-    return ticketCount+"";
+function updateAnalytics(tickets){
+    const todaysDate = dateFormat(new Date(), "dd-mm-yyyy");
+    var incomingCount = 0, dispatchedCount = 0, approvalCount = 0, approvedCount = 0, sceduledCount = 0,
+        workCompletedCount = 0, workRatedCount = 0;
+    var highCount = 0, mediumCount = 0, lowCount = 0;
+
+    tickets.forEach(function (ticket) {
+        if (todaysTicket(ticket, todaysDate)) {
+            switch (ticket.status) {
+                case "Incoming":
+                    incomingCount++;
+                    break;
+                case "Assigned":
+                    dispatchedCount++;
+                    break;
+                case "Approver Assigned":
+                    approvalCount++;
+                    break;
+                case "Approved":
+                    approvedCount++;
+                    break;
+                case "Scheduled":
+                    sceduledCount++;
+                    break;
+                case "Work Completed":
+                    workCompletedCount++;
+                    break;
+                case "WorkRated":
+                    workRatedCount++;
+                    break;
+                default:
+                    break;
+            }
+
+            switch (ticket.priority) {
+                case "HIGH":
+                    highCount++;
+                    break;
+                case "MEDIUM":
+                    mediumCount++;
+                    break;
+                case "LOW":
+                    lowCount++;
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+
+    analytic.analyticsDate = todaysDate;
+    analytic.incomingCount = incomingCount;
+    analytic.dispatchedCount = dispatchedCount;
+    analytic.approvalCount = approvalCount;
+    analytic.approvedCount = approvedCount;
+    analytic.scheduleCount = sceduledCount;
+    analytic.workCompletedCount = workCompletedCount;
+    analytic.workRatedCount = workRatedCount;
+
+    analytic.highCount = highCount;
+    analytic.mediumCount = mediumCount;
+    analytic.lowCount = lowCount;
+
+    var ref = database.ref("analytics");
+    ref.update(analytic);
+    console.log("Update Analytics called >> ",new Date()+"")
 }
 
-function updateAnalytics(tickets){
-    console.log("Update Analytics called >> ",new Date()+"")
+function todaysTicket(ticket, todaysDate) {
+    var ticketDate = dateFormat(ticket.dateTime, "dd-mm-yyyy");
+    return (ticketDate === todaysDate);
 }
 
 module.exports = router;
