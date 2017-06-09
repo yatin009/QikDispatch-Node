@@ -28,6 +28,8 @@ const serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
 
 const database = admin.database();
 
+
+
 router.get("/create_twilio_message", function (req, res) {
     client.messages.create({
         body: 'Hello from Node',
@@ -45,27 +47,44 @@ router.get("/create_twilio_message", function (req, res) {
     //(message) => console.log(message.sid)
 });
 
-router.get("/get_twilio_message", function (req, res) {
-    var messages = []
+router.get("/get_twilio_messages", function (req, res) {
+    getAllMessages(false, function (messages) {
+        if (messages.length > 0) {
+            filterValidMessage(messages, res);
+        } else {
+            res.status(200);
+            res.send('No new messages');
+        }
+    })
+});
+
+router.get("/delete_all_twilio_messages", function (req, res) {
+    getAllMessages(true, function (messages) {
+        if (messages.length > 0) {
+            deleteAllMessages(messages, res);
+        } else {
+            res.status(200);
+            res.send('No new messages');
+        }
+    })
+});
+
+function getAllMessages(getAllMessages, callback){
+    var messageList = [];
     client.messages.list(function (err, data) {
         if (!err) {
             data.forEach(function (message) {
-                if (message.direction === 'inbound' && message.numMedia > 0) {
-                    messages.push(message)
+                if (getAllMessages || (message.direction === 'inbound' && message.numMedia > 0)) {
+                    messageList.push(message)
                 }
             });
-            if (messages.length > 0) {
-                filterValidMessage(messages, res);
-            } else {
-                res.status(200);
-                res.send('No new messages');
-            }
+            callback(messageList);
         } else {
-            res.status(err.status);
-            res.send(err)
+            console.log(err);
+            callback(messageList);
         }
     });
-});
+}
 
 function filterValidMessage(messages, res) {
     //TODO invalid messages array not used, to reply back user to message from registerred number.
@@ -162,7 +181,7 @@ function createTicket(fTicketMessage, res) {
         geocoder.geocode(location)
             .then(function (res) {
                 pushTicket(new Ticket(
-                    dateFormat(childMessage.dateCreated, "dd-mm-yyyy HH:MM")+"",
+                    dateFormat(childMessage.dateCreated, "mm-dd-yyyy HH:MM")+"",
                     childMessage.sid,
                     childMessage.body,
                     res[0].latitude,
@@ -195,6 +214,17 @@ function sendReply(to, from, body) {
         to: to,  // Text this number
         from: '+16479302246' // From a valid Twilio number
     });
+}
+
+function deleteAllMessages(messageList, res){
+    messageList.forEach(function(message){
+        client.messages(message.sid).fetch().then((message) => {
+            return message.remove().then(() => console.log(message.body));
+        });
+        // client.messages().delete();
+    });
+    res.status(200);
+    res.send('Deleted '+messageList.length + ' messages');
 }
 
 module.exports = router;
