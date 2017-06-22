@@ -74,7 +74,7 @@ function getAllMessages(getAllMessages, callback){
     client.messages.list(function (err, data) {
         if (!err) {
             data.forEach(function (message) {
-                if (getAllMessages || (message.direction === 'inbound' && message.numMedia > 0)) {
+                if (getAllMessages || (message.direction === 'inbound')) {//&& message.numMedia > 0
                     messageList.push(message)
                 }
             });
@@ -117,6 +117,7 @@ function filterValidMessage(messages, res) {
 
 function checkDBForOldMessage(messages, res) {
     var fMessagesid = [];
+    var fTicketMediaMessage = [];
     var fTicketMessage = [];
     var ref = database.ref("ticketing");
     // Attach an asynchronous callback to read the data at our posts reference
@@ -128,30 +129,34 @@ function checkDBForOldMessage(messages, res) {
             }
         });
         messages.forEach(function (childMessage) {
-            if (fMessagesid.indexOf(childMessage.sid) == -1) {
-                fTicketMessage.push(childMessage);
+            if (fMessagesid.indexOf(childMessage.sid) === -1) {
+                if(childMessage.numMedia>0){
+                    fTicketMediaMessage.push(childMessage);
+                }else {
+                    childMessage.imageUri = null;
+                    fTicketMessage.push(childMessage);
+                }
             }
         });
-        if (fTicketMessage.length > 0) {
-            downloadMediaUri(fTicketMessage, res);
+        if (fTicketMediaMessage.length > 0 || fTicketMessage.length > 0) {
+            downloadMediaUri(fTicketMediaMessage, fTicketMessage, res);
         } else {
-            res.status(200)
+            res.status(200);
             res.send('No new Messages');
         }
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
-        res.status(402)
+        res.status(402);
         res.send(errorObject.code);
     });
 }
 
-function downloadMediaUri(messages, res) {
-    async.forEachOf(messages, function (message, key, callback) {
+function downloadMediaUri(mediaMessages, messages, res) {
+    async.forEachOf(mediaMessages, function (message, key, callback) {
         client.messages(message.sid).media.list(function (err, data) {
             if (err) {
                 return callback(err);
             }
-
             data.forEach(function (media) {
                 message.imageUri = parseImageUri(media.uri);
                 callback();
@@ -163,8 +168,8 @@ function downloadMediaUri(messages, res) {
             res.status(400);
             res.send(err);
         }
-        ;
         // configs is now a map of JSON data
+        messages.concat(mediaMessages);
         createTicket(messages, res);
     });
 }
@@ -181,21 +186,18 @@ function createTicket(fTicketMessage, res) {
         geocoder.geocode(location)
             .then(function (res) {
                 pushTicket(new Ticket(
+                    childMessage,
                     dateFormat(childMessage.dateCreated, "mm-dd-yyyy HH:MM")+"",
-                    childMessage.sid,
-                    childMessage.body,
                     res[0].latitude,
                     res[0].longitude,
                     res[0].formattedAddress,
-                    childMessage.from,
-                    res[0].city,
-                    childMessage.imageUri));
+                    res[0].city));
             })
             .catch(function (err) {
                 console.log(err);
             });
     });
-    res.status(200)
+    res.status(200);
     res.send('Tickets created from new messages ' + fTicketMessage.length);
 }
 

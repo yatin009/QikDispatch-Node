@@ -8,8 +8,7 @@
 var RequesterData = require('../models/requesterData.js');
 var TicketTimeline = require('../models/ticketTimeline.js');
 
-
-function TwilioTicket(date, id, msg, lat, lng, address, requesterNumber, city, imageUrl) {
+function TwilioTicket(message, date, id, msg, lat, lng, address, requesterNumber, city, imageUrl) {
     this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = date; //tweet.created_at; //Add dateTime
     this.issueImageName = imageUrl; //tweet.media[0].media_url; // Add image link
@@ -28,6 +27,28 @@ function TwilioTicket(date, id, msg, lat, lng, address, requesterNumber, city, i
     this.contractorId = null;
     this.messageId = id; //tweet.id_str;
     this.issue = msg; //tweet.text;
+}
+
+function TwilioTicket(message, date, lat, lng){
+    this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
+    this.dateTime = date;
+    this.issueImageName = message.imageUri;
+    this.lat = lat;//43.7854;
+    this.lng = lng;//-79.2265;
+    this.priority = "HIGH";
+    this.requestorId = message.from;
+    this.searchKeyword = "";
+    this.status = "Incoming";
+    this.ticketKey = "";
+    this.ticketNumber = "";
+    this.requester = new RequesterData(message.buildingUser, message.body);
+    this.messageId = message.sid;
+    this.issue = message.body;
+    this.ticketTimelines = ticketTimeline;
+    this.buildingUser = message.buildingUser;
+    // null parameters
+    this.approverId = null;
+    this.contractorId = null;
 }
 
 var ticketTimeline = {
