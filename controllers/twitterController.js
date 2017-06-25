@@ -98,7 +98,7 @@ function createTicket(fTicketTweet, res) {
             imageURL = childTweet.entities.media[0].media_url;
         }
         if (childTweet.coordinates && childTweet.coordinates.coordinates) {
-            lng = childTweet.coordinates.coordinates[0]
+            lng = childTweet.coordinates.coordinates[0];
             lat = childTweet.coordinates.coordinates[1];
             geocoder.reverse({lat: lat, lon: lng})
                 .then(function (res) {

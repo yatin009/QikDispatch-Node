@@ -40,8 +40,8 @@ function TwilioTicket(message, date, lat, lng){
     this.searchKeyword = "";
     this.status = "Incoming";
     this.ticketKey = "";
-    this.ticketNumber = "";
-    this.requester = new RequesterData(message.buildingUser, message.body);
+    this.ticketNumber = new Date().getTime()+"";
+    this.requester = new RequesterData(message.body, null, null, message.buildingUser);
     this.messageId = message.sid;
     this.issue = message.body;
     this.ticketTimelines = ticketTimeline;

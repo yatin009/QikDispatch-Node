@@ -2,7 +2,7 @@
  * Created by yatin on 21/05/17.
  */
 
-var RequesterData = require('../models/requesterData.js');
+var TwiiterRequesterData = require('../models/requesterData.js');
 var TicketTimeline = require('../models/ticketTimeline.js');
 
 
@@ -17,8 +17,8 @@ function TwitterTicket(date, image_url, id, msg, lat, lng, address, city) {
     this.searchKeyword = "";
     this.status = "Incoming";
     this.ticketKey = "";
-    this.ticketNumber = "";
-    this.requester = new RequesterData(msg, address, city)
+    this.ticketNumber = new Date().getTime()+"";
+    this.requester = new TwiiterRequesterData(msg, address, city);
     this.ticketTimelines = ticketTimeline;
     // null parameters
     this.approverId = null;

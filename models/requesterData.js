@@ -3,19 +3,19 @@
  */
 var UserInfo = require('../models/userInfo.js');
 
-function RequesterData(msg, address, city) {
+function RequesterData(msg, address, city, buildUser) {
+    if (buildUser) {
+        this.issue = msg;
+        this.priority = "HIGH";
+        this.location = buildUser.unitNumber + ", " + buildUser.address;
+        this.city = buildUser.city;
+        this.userInfo = new UserInfo(buildUser);
+        return;
+    }
     this.issue = msg;
     this.priority = "HIGH";
     this.location = address;
-    this.city = city
-}
-
-function RequesterData(buildUser, msg) {
-    this.issue = msg;
-    this.priority = "HIGH";
-    this.location = buildUser.unitNumber + ", "+buildUser.address;
-    this.city = buildUser.city;
-    this.userInfo = new UserInfo(buildUser)
+    this.city = city;
 }
 
 RequesterData.prototype.toJSONString = function () {
