@@ -28,12 +28,12 @@ const serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
 
 const database = admin.database();
 
-
-
-router.get("/create_twilio_message", function (req, res) {
+router.post("/create_twilio_message", function (req, res) {
+    console.log(req.body);
+    var sms = req.body;
     client.messages.create({
-        body: 'Hello from Node',
-        to: '+1',  // Text this number
+        body: sms.body,
+        to: sms.to,  // Text this number
         from: '+16479302246' // From a valid Twilio number
     }, function (err, message) {
         if (!err) {
