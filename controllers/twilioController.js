@@ -185,13 +185,18 @@ function createTicket(fTicketMessage, res) {
 
         geocoder.geocode(location)
             .then(function (res) {
+                var lat = 0, lng =0;
+                if(res[0]){
+                    lat = res[0].latitude;
+                    lng = res[0].longitude;
+                }
                 pushTicket(new Ticket(
                     childMessage,
                     dateFormat(childMessage.dateCreated, "mm-dd-yyyy HH:MM")+"",
                     res[0].latitude,
                     res[0].longitude,
-                    res[0].formattedAddress,
-                    res[0].city));
+                    location,
+                    childMessage.buildingUser.city));
             })
             .catch(function (err) {
                 console.log(err);
