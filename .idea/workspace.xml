@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="922bda47-c3f1-42d4-97e8-e8b44356a232" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/twilioController.js" afterPath="$PROJECT_DIR$/controllers/twilioController.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -26,59 +27,26 @@
       <file leaf-file-name="twilioController.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/twilioController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="187" column="35" lean-forward="false" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+            <state relative-caret-position="157">
+              <caret line="172" column="7" lean-forward="false" selection-start-line="172" selection-start-column="7" selection-end-line="172" selection-end-column="7" />
               <folding>
                 <element signature="e#0#40#0" expanded="false" />
                 <element signature="e#337#497#0" expanded="false" />
                 <element signature="e#1017#1484#0" expanded="false" />
-                <element signature="e#1543#1780#0" expanded="false" />
-                <element signature="e#1591#1777#0" expanded="false" />
-                <element signature="e#1626#1684#0" expanded="false" />
                 <element signature="e#1690#1771#0" expanded="false" />
                 <element signature="e#1846#2081#0" expanded="false" />
                 <element signature="e#1893#2078#0" expanded="false" />
                 <element signature="e#1928#1985#0" expanded="false" />
                 <element signature="e#1991#2072#0" expanded="false" />
-                <element signature="n#!!block;n#getAllMessages#0" expanded="false" />
                 <element signature="e#2208#2588#0" expanded="false" />
                 <element signature="e#2228#2500#0" expanded="false" />
                 <element signature="e#2274#2453#0" expanded="false" />
                 <element signature="e#2349#2439#0" expanded="false" />
                 <element signature="e#2506#2582#0" expanded="false" />
-                <element signature="n#!!block;n#filterValidMessage#0" expanded="false" />
-                <element signature="e#2875#3510#0" expanded="false" />
-                <element signature="e#2923#3311#0" expanded="false" />
-                <element signature="e#3018#3299#0" expanded="false" />
-                <element signature="e#3088#3210#0" expanded="false" />
-                <element signature="e#3216#3285#0" expanded="false" />
-                <element signature="e#3352#3417#0" expanded="false" />
-                <element signature="e#3423#3504#0" expanded="false" />
                 <element signature="e#3535#3664#0" expanded="false" />
-                <element signature="n#!!block;n#checkDBForOldMessage#0" expanded="false" />
-                <element signature="e#3968#4831#0" expanded="false" />
-                <element signature="e#4016#4186#0" expanded="false" />
-                <element signature="e#4104#4176#0" expanded="false" />
-                <element signature="e#4238#4579#0" expanded="false" />
-                <element signature="e#4302#4569#0" expanded="false" />
-                <element signature="e#4347#4426#0" expanded="false" />
-                <element signature="e#4431#4555#0" expanded="false" />
-                <element signature="e#4655#4738#0" expanded="false" />
-                <element signature="e#4744#4825#0" expanded="false" />
-                <element signature="e#4856#4985#0" expanded="false" />
-                <element signature="n#!!block;n#downloadMediaUri#0" expanded="false" />
-                <element signature="e#5118#5432#0" expanded="false" />
-                <element signature="e#5189#5424#0" expanded="false" />
-                <element signature="e#5212#5265#0" expanded="false" />
-                <element signature="e#5308#5412#0" expanded="false" />
-                <element signature="e#5449#5703#0" expanded="false" />
-                <element signature="e#5468#5575#0" expanded="false" />
-                <element signature="n#!!block;n#parseImageUri#0" expanded="false" />
-                <element signature="n#!!block;n#pushTicket#0" expanded="false" />
-                <element signature="e#7252#7434#0" expanded="false" />
                 <element signature="n#!!block;n#deleteAllMessages#0" expanded="false" />
-                <element signature="e#7527#7725#0" expanded="false" />
-                <element signature="e#7592#7678#0" expanded="false" />
+                <element signature="e#7545#7743#0" expanded="false" />
+                <element signature="e#7610#7696#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -108,7 +76,7 @@
         <entry file="file://$PROJECT_DIR$/models/requesterData.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="85">
-              <caret line="5" column="30" lean-forward="false" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+              <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
               <folding />
             </state>
           </provider>
@@ -117,8 +85,8 @@
       <file leaf-file-name="twilioTicket.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
+            <state relative-caret-position="305">
+              <caret line="38" column="27" lean-forward="true" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -442,12 +410,12 @@
       <workItem from="1498433623520" duration="354000" />
       <workItem from="1498590728508" duration="2410000" />
       <workItem from="1498615973102" duration="14000" />
-      <workItem from="1498776989282" duration="707000" />
+      <workItem from="1498776989282" duration="2323000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65446000" />
+    <option name="totallyTimeSpent" value="67062000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -468,9 +436,9 @@
       <window_info id="npm" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32932863" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6458599" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3299363" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.6280255" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.6280255" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -499,8 +467,14 @@
           <line>21</line>
           <option name="timeStamp" value="82" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="javascript">
+          <url>file://$PROJECT_DIR$/controllers/twilioController.js</url>
+          <line>172</line>
+          <properties />
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
       </breakpoints>
-      <option name="time" value="85" />
+      <option name="time" value="93" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -842,18 +816,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
+    <entry file="file://$PROJECT_DIR$/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="22" column="34" lean-forward="true" selection-start-line="22" selection-start-column="34" selection-end-line="22" selection-end-column="34" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/models/requesterData.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="5" column="30" lean-forward="false" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+        <state relative-caret-position="170">
+          <caret line="10" column="49" lean-forward="false" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="49" />
           <folding />
         </state>
       </provider>
@@ -866,69 +832,44 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.js">
+    <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="49" lean-forward="false" selection-start-line="10" selection-start-column="33" selection-end-line="10" selection-end-column="49" />
+        <state relative-caret-position="305">
+          <caret line="38" column="27" lean-forward="true" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/requesterData.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="5" column="9" lean-forward="false" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/controllers/twilioController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="187" column="35" lean-forward="false" selection-start-line="187" selection-start-column="35" selection-end-line="187" selection-end-column="35" />
+        <state relative-caret-position="157">
+          <caret line="172" column="7" lean-forward="false" selection-start-line="172" selection-start-column="7" selection-end-line="172" selection-end-column="7" />
           <folding>
             <element signature="e#0#40#0" expanded="false" />
             <element signature="e#337#497#0" expanded="false" />
             <element signature="e#1017#1484#0" expanded="false" />
-            <element signature="e#1543#1780#0" expanded="false" />
-            <element signature="e#1591#1777#0" expanded="false" />
-            <element signature="e#1626#1684#0" expanded="false" />
             <element signature="e#1690#1771#0" expanded="false" />
             <element signature="e#1846#2081#0" expanded="false" />
             <element signature="e#1893#2078#0" expanded="false" />
             <element signature="e#1928#1985#0" expanded="false" />
             <element signature="e#1991#2072#0" expanded="false" />
-            <element signature="n#!!block;n#getAllMessages#0" expanded="false" />
             <element signature="e#2208#2588#0" expanded="false" />
             <element signature="e#2228#2500#0" expanded="false" />
             <element signature="e#2274#2453#0" expanded="false" />
             <element signature="e#2349#2439#0" expanded="false" />
             <element signature="e#2506#2582#0" expanded="false" />
-            <element signature="n#!!block;n#filterValidMessage#0" expanded="false" />
-            <element signature="e#2875#3510#0" expanded="false" />
-            <element signature="e#2923#3311#0" expanded="false" />
-            <element signature="e#3018#3299#0" expanded="false" />
-            <element signature="e#3088#3210#0" expanded="false" />
-            <element signature="e#3216#3285#0" expanded="false" />
-            <element signature="e#3352#3417#0" expanded="false" />
-            <element signature="e#3423#3504#0" expanded="false" />
             <element signature="e#3535#3664#0" expanded="false" />
-            <element signature="n#!!block;n#checkDBForOldMessage#0" expanded="false" />
-            <element signature="e#3968#4831#0" expanded="false" />
-            <element signature="e#4016#4186#0" expanded="false" />
-            <element signature="e#4104#4176#0" expanded="false" />
-            <element signature="e#4238#4579#0" expanded="false" />
-            <element signature="e#4302#4569#0" expanded="false" />
-            <element signature="e#4347#4426#0" expanded="false" />
-            <element signature="e#4431#4555#0" expanded="false" />
-            <element signature="e#4655#4738#0" expanded="false" />
-            <element signature="e#4744#4825#0" expanded="false" />
-            <element signature="e#4856#4985#0" expanded="false" />
-            <element signature="n#!!block;n#downloadMediaUri#0" expanded="false" />
-            <element signature="e#5118#5432#0" expanded="false" />
-            <element signature="e#5189#5424#0" expanded="false" />
-            <element signature="e#5212#5265#0" expanded="false" />
-            <element signature="e#5308#5412#0" expanded="false" />
-            <element signature="e#5449#5703#0" expanded="false" />
-            <element signature="e#5468#5575#0" expanded="false" />
-            <element signature="n#!!block;n#parseImageUri#0" expanded="false" />
-            <element signature="n#!!block;n#pushTicket#0" expanded="false" />
-            <element signature="e#7252#7434#0" expanded="false" />
             <element signature="n#!!block;n#deleteAllMessages#0" expanded="false" />
-            <element signature="e#7527#7725#0" expanded="false" />
-            <element signature="e#7592#7678#0" expanded="false" />
+            <element signature="e#7545#7743#0" expanded="false" />
+            <element signature="e#7610#7696#0" expanded="false" />
           </folding>
         </state>
       </provider>

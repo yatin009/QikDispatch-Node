@@ -169,8 +169,8 @@ function downloadMediaUri(mediaMessages, messages, res) {
             res.send(err);
         }
         // configs is now a map of JSON data
-        messages.concat(mediaMessages);
-        createTicket(messages, res);
+        var allMessages = messages.concat(mediaMessages);
+        createTicket(allMessages, res);
     });
 }
 
