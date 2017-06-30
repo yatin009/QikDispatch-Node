@@ -209,7 +209,7 @@ function createTicket(fTicketMessage, res) {
 function pushTicket(ticket){
     let newPostKey = database.ref("ticketing").push().key;
     ticket.ticketKey = newPostKey;
-    // sendReply(ticket.requestorId, "", "");
+    sendReply(ticket.requestorId, "", "");
     admin.database().ref("ticketing/" + newPostKey).set(
         ticket
     );
