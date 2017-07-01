@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="922bda47-c3f1-42d4-97e8-e8b44356a232" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/twitterController.js" afterPath="$PROJECT_DIR$/controllers/twitterController.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/models/twilioTicket.js" afterPath="$PROJECT_DIR$/models/twilioTicket.js" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -52,16 +52,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="app.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app.js">
           <provider selected="true" editor-type-id="text-editor">
@@ -92,20 +82,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="twilioTicket.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="twilioTicket.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="305">
-              <caret line="38" column="27" lean-forward="false" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
+            <state relative-caret-position="225">
+              <caret line="32" column="50" lean-forward="false" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="twitterController.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="twitterController.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controllers/twitterController.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="374">
+            <state relative-caret-position="408">
               <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
               <folding>
                 <element signature="e#280#439#0" expanded="false" />
@@ -165,11 +155,11 @@
         <option value="$PROJECT_DIR$/models/userInfo.js" />
         <option value="$PROJECT_DIR$/models/twitterTicket.js" />
         <option value="$PROJECT_DIR$/models/requesterData.js" />
-        <option value="$PROJECT_DIR$/models/twilioTicket.js" />
         <option value="$PROJECT_DIR$/package.json" />
         <option value="$PROJECT_DIR$/app.js" />
         <option value="$PROJECT_DIR$/controllers/twilioController.js" />
         <option value="$PROJECT_DIR$/controllers/twitterController.js" />
+        <option value="$PROJECT_DIR$/models/twilioTicket.js" />
       </list>
     </option>
   </component>
@@ -215,7 +205,6 @@
     </navigator>
     <panes>
       <pane id="Scratches" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -244,6 +233,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -421,12 +411,13 @@
       <workItem from="1498590728508" duration="2410000" />
       <workItem from="1498615973102" duration="14000" />
       <workItem from="1498776989282" duration="2432000" />
-      <workItem from="1498876436954" duration="436000" />
+      <workItem from="1498876436954" duration="641000" />
+      <workItem from="1498932283256" duration="532000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="67607000" />
+    <option name="totallyTimeSpent" value="68344000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -823,7 +814,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -869,21 +859,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="305">
-          <caret line="38" column="27" lean-forward="false" selection-start-line="38" selection-start-column="27" selection-end-line="38" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/twitterController.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
+        <state relative-caret-position="408">
           <caret line="29" column="44" lean-forward="false" selection-start-line="29" selection-start-column="44" selection-end-line="29" selection-end-column="44" />
           <folding>
             <element signature="e#280#439#0" expanded="false" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/models/twilioTicket.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="32" column="50" lean-forward="false" selection-start-line="32" selection-start-column="50" selection-end-line="32" selection-end-column="50" />
+          <folding />
         </state>
       </provider>
     </entry>

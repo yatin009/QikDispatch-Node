@@ -30,7 +30,7 @@ function TwilioTicket(message, date, id, msg, lat, lng, address, requesterNumber
 }
 
 function TwilioTicket(message, date, lat, lng){
-    this.agentId = "4HyK2VKuffQvoY5cih8pM7NjGMr1";
+    this.agentId = message.buildingUser.agentId;//"4HyK2VKuffQvoY5cih8pM7NjGMr1";
     this.dateTime = date;
     this.issueImageName = message.imageUri;
     this.lat = lat;//43.7854;
