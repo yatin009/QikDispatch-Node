@@ -18,7 +18,7 @@ const geocoder = NodeGeocoder(options);
 var tickets = [];
 
 // Fetch the service account key JSON file contents
-const serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
+const serviceAccount = require("../qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
 
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({

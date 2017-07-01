@@ -24,7 +24,7 @@ const authToken = 'a0a2d7315ded3cc86b2d3abcd5177340';   // Your Auth Token from 
 const client = new twilio(accountSid, authToken);
 
 // Fetch the service account key JSON file contents
-const serviceAccount = require("../QikDispatch-Dev-549fe5876000.json");
+const serviceAccount = require("../qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
 
 const database = admin.database();
 
