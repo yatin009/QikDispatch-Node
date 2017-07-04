@@ -23,9 +23,6 @@ const authToken = 'a0a2d7315ded3cc86b2d3abcd5177340';   // Your Auth Token from 
 
 const client = new twilio(accountSid, authToken);
 
-// Fetch the service account key JSON file contents
-const serviceAccount = require("../qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
-
 const database = admin.database();
 
 router.post("/create_twilio_message", function (req, res) {
@@ -69,7 +66,7 @@ router.get("/delete_all_twilio_messages", function (req, res) {
     })
 });
 
-function getAllMessages(getAllMessages, callback){
+function getAllMessages(getAllMessages, callback) {
     var messageList = [];
     client.messages.list(function (err, data) {
         if (!err) {
@@ -130,9 +127,9 @@ function checkDBForOldMessage(messages, res) {
         });
         messages.forEach(function (childMessage) {
             if (fMessagesid.indexOf(childMessage.sid) === -1) {
-                if(childMessage.numMedia>0){
+                if (childMessage.numMedia > 0) {
                     fTicketMediaMessage.push(childMessage);
-                }else {
+                } else {
                     childMessage.imageUri = null;
                     fTicketMessage.push(childMessage);
                 }
@@ -185,14 +182,14 @@ function createTicket(fTicketMessage, res) {
 
         geocoder.geocode(location)
             .then(function (res) {
-                var lat = 0, lng =0;
-                if(res[0]){
+                var lat = 0, lng = 0;
+                if (res[0]) {
                     lat = res[0].latitude;
                     lng = res[0].longitude;
                 }
                 pushTicket(new Ticket(
                     childMessage,
-                    dateFormat(childMessage.dateCreated, "mm-dd-yyyy HH:MM")+"",
+                    dateFormat(childMessage.dateCreated, "mm-dd-yyyy HH:MM") + "",
                     res[0].latitude,
                     res[0].longitude,
                     location,
@@ -206,7 +203,7 @@ function createTicket(fTicketMessage, res) {
     res.send('Tickets created from new messages ' + fTicketMessage.length);
 }
 
-function pushTicket(ticket){
+function pushTicket(ticket) {
     let newPostKey = database.ref("ticketing").push().key;
     ticket.ticketKey = newPostKey;
     sendReply(ticket.requestorId, "", "");
@@ -223,15 +220,15 @@ function sendReply(to, from, body) {
     });
 }
 
-function deleteAllMessages(messageList, res){
-    messageList.forEach(function(message){
+function deleteAllMessages(messageList, res) {
+    messageList.forEach(function (message) {
         client.messages(message.sid).fetch().then((message) => {
             return message.remove().then(() => console.log(message.body));
         });
         // client.messages().delete();
     });
     res.status(200);
-    res.send('Deleted '+messageList.length + ' messages');
+    res.send('Deleted ' + messageList.length + ' messages');
 }
 
 module.exports = router;

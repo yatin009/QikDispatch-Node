@@ -3,29 +3,16 @@ const Twitter = require('twitter');
 const Ticket = require('../models/twitterTicket.js');
 const admin = require('firebase-admin');
 const NodeGeocoder = require('node-geocoder');
-
 const dateFormat = require('dateformat');
-
 const options = {
     provider: 'google',
     // Optional depending on the providers
     httpAdapter: 'https', // Default
     formatter: null         // 'gpx', 'string', ...
 };
-
 const geocoder = NodeGeocoder(options);
 
-var tickets = [];
-
-// Fetch the service account key JSON file contents
-const serviceAccount = require("../qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
-
-// Initialize the app with a service account, granting admin privileges
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://qikdispatch-dev.firebaseio.com/"
-});
-
+const database = admin.database();
 const client = new Twitter({
     consumer_key: 'lxM4lEOBEQ2gXeTw9Eo2Pl9To',
     consumer_secret: 'pimTKJmL1CT8nziAeL8h4nQOsBYdOlucewDQQZLhWOz9AXWXHe',
@@ -33,7 +20,7 @@ const client = new Twitter({
     access_token_secret: 'XA9IdAWpF4KIfHktU5CM4zT1g6KhbMr3nHR4dSqldpSUf',
 });
 
-const database = admin.database();
+var tickets = [];
 
 router.get("/", function (req, res) {
     res.send('Hello World!')
