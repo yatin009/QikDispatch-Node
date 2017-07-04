@@ -2,9 +2,9 @@
  * Created by yatin on 30/04/17.
  */
 
-function TicketTimeline(name, status) {
+function TicketTimeline(name, status, date) {
     this.basicInfo = "";
-    this.dateTime = "26-04-2017 00:05 AM";
+    this.dateTime = date;
     this.name = name;
     this.status = status
 }

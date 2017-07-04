@@ -1,8 +1,7 @@
-var express = require('express');
-
-var config = require('./config');
-
-var app = express()
+const express = require('express');
+const config = require('./config');
+const app = express()
+const admin = require('firebase-admin');
 
 app.set('port', (process.env.PORT || 5000));
 
@@ -14,6 +13,15 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 }));
 
 // var router = express.Router(); 
+
+// Fetch the service account key JSON file contents
+const serviceAccount = require("./qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
+
+// Initialize the app with a service account, granting admin privileges
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    databaseURL: "https://qikdispatch-prod.firebaseio.com/"
+});
 
 app.use("/", require(`./controllers/twitterController.js`));
 app.use("/", require(`./controllers/twilioController.js`));
