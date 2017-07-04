@@ -15,12 +15,12 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 // var router = express.Router(); 
 
 // Fetch the service account key JSON file contents
-const serviceAccount = require("./qikdispatch-prod-firebase-adminsdk-lowsk-fde3f752dc.json");
+const serviceAccount = require("./QikDispatch-Dev-549fe5876000.json");
 
 // Initialize the app with a service account, granting admin privileges
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    databaseURL: "https://qikdispatch-prod.firebaseio.com/"
+    databaseURL: "https://qikdispatch-dev.firebaseio.com/"
 });
 
 app.use("/", require(`./controllers/twitterController.js`));
