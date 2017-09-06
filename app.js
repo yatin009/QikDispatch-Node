@@ -25,6 +25,7 @@ admin.initializeApp({
 
 app.use("/", require(`./controllers/twitterController.js`));
 app.use("/", require(`./controllers/twilioController.js`));
+app.use("/", require(`./controllers/registrationController.js`));
 
 // app.use("trust proxy", 1);
 

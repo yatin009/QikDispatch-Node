@@ -165,7 +165,6 @@ function getTicketNumber(callback) {
 }
 
 function updateAnalytics(tickets){
-
     var myMap = new Map();
     tickets.forEach(function(ticket){
         const tDate = formatTicketDate(ticket.dateTime);

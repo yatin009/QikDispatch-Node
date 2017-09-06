@@ -126,7 +126,7 @@ function checkDBForOldMessage(messages, res) {
             }
         });
         messages.forEach(function (childMessage) {
-            if (fMessagesid.indexOf(childMessage.sid) === -1) {
+            if (fMessagesid.indexOf(childMessage.sid) === -1)   {
                 if (childMessage.numMedia > 0) {
                     fTicketMediaMessage.push(childMessage);
                 } else {
