@@ -5,6 +5,7 @@ let router = require('express').Router();
 const admin = require('firebase-admin');
 const dateFormat = require('dateformat');
 let Organization = require('../models/organization.js');
+let Contractor = require('../models/contractor.js');
 let User = require('../models/user.js');
 
 const database = admin.database();
@@ -71,10 +72,10 @@ function registerAgentInFirebase(organization, res){
         displayName: organization.name,
         disabled: false
     }).then(function(userRecord) {
-            // See the UserRecord reference doc for the contents of userRecord.
-            console.log("Successfully created new user:", userRecord.uid);
-            createAgentInFirebase(userRecord, organization, res);
-        })
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log("Successfully created new user:", userRecord.uid);
+        createAgentInFirebase(userRecord, organization, res);
+    })
         .catch(function(error) {
             console.log("Error creating new user:", error);
             res.status(500);
@@ -83,10 +84,51 @@ function registerAgentInFirebase(organization, res){
 }
 
 function createAgentInFirebase(userRecord, organization, res){
-    var agentUser = new User(organization, userRecord);
+    var agentUser = new User(organization, userRecord, false);
     admin.database().ref("users/" + agentUser.uniqueId).set(
         agentUser
     );
+    res.status(200);
+    res.send("Organization and Agent Created");
+}
+
+router.post('/register_contractor', function (req, res) {
+    var con = req.body;
+    console.log(con);
+    registerContractorInFirebase(con, res);
+});
+
+function registerContractorInFirebase(contractor, res){
+    admin.auth().createUser({
+        email: contractor.email,
+        emailVerified: true,
+        phoneNumber: contractor.contactNumber,
+        password: contractor.password,
+        displayName: contractor.name,
+        disabled: false
+    }).then(function(userRecord) {
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log("Successfully created new user:", userRecord.uid);
+        createContractorInFirebase(userRecord, contractor, res);
+    })
+        .catch(function(error) {
+            console.log("Error creating new user:", error);
+            res.status(500);
+            res.send("Error creating Contractor in firebase authentication");
+        });
+}
+
+function createContractorInFirebase(userRecord, contractor, res){
+    var contractorUser = new Contractor(contractor, userRecord);
+    admin.database().ref("contractors/" + contractorUser.uniqueId).set(
+        contractorUser
+    );
+
+    var user = new User(contractorUser, contractor, true);
+    admin.database().ref("users/" + contractorUser.uniqueId).set(
+        contractorUser
+    );
+
     res.status(200);
     res.send("Organization and Agent Created");
 }
