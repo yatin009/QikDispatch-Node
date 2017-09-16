@@ -2,31 +2,16 @@
  * Created by yatin on 05/09/17.
  */
 
-function User(organization, userRecord, isContractor) {
-    if(!isContractor) {
-        this.agentId = userRecord.uid;
-        this.password = "123456";
-        this.role = "agent";
-        this.organizationCode = organization.organizationCode;
-        this.uniqueId = userRecord.uid;
-        this.contactNumber = organization.contactNumber;
-        this.name = organization.name;
-        this.emailId = organization.email;
-        this.enabled = true
-    }else{
-        this.password = userRecord.password;
-        this.role = "contractor";
-        this.organizationCode = contrator.organizationCode;
-        this.uniqueId = contrator.uniqueId;
-        this.contactNumber = contrator.contactNumber;
-        this.name = contrator.name;
-        this.emailId = contrator.email;
-        this.enabled = true
-    }
-}
-
-function User(contrator) {
-
+function User(organization, userRecord) {
+    this.agentId = userRecord.uid;
+    this.password = "123456";
+    this.role = "agent";
+    this.organizationCode = organization.organizationCode;
+    this.uniqueId = userRecord.uid;
+    this.contactNumber = organization.contactNumber;
+    this.name = organization.name;
+    this.emailId = organization.email;
+    this.enabled = true
 }
 
 User.prototype.toJSONString = function () {

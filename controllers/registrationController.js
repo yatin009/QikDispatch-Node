@@ -7,6 +7,7 @@ const dateFormat = require('dateformat');
 let Organization = require('../models/organization.js');
 let Contractor = require('../models/contractor.js');
 let User = require('../models/user.js');
+let ContractorUser = require('../models/contractorUser.js');
 
 const database = admin.database();
 
@@ -84,7 +85,7 @@ function registerAgentInFirebase(organization, res){
 }
 
 function createAgentInFirebase(userRecord, organization, res){
-    var agentUser = new User(organization, userRecord, false);
+    var agentUser = new User(organization, userRecord);
     admin.database().ref("users/" + agentUser.uniqueId).set(
         agentUser
     );
@@ -124,7 +125,7 @@ function createContractorInFirebase(userRecord, contractor, res){
         contractorUser
     );
 
-    var user = new User(contractorUser, contractor, true);
+    var user = new ContractorUser(contractorUser, contractor);
     admin.database().ref("users/" + contractorUser.uniqueId).set(
         user
     );
