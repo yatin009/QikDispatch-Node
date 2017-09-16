@@ -8,6 +8,7 @@ let Organization = require('../models/organization.js');
 let Contractor = require('../models/contractor.js');
 let User = require('../models/user.js');
 let ContractorUser = require('../models/contractorUser.js');
+let FirebaseUser = require('../models/firebaseUser.js');
 
 const database = admin.database();
 
@@ -131,6 +132,41 @@ function createContractorInFirebase(userRecord, contractor, res){
     );
     res.status(200);
     res.send("Contractor Created");
+}
+
+router.post('/register_user', function (req, res) {
+    var usr = req.body;
+    console.log(usr);
+    registerUserInFirebase(con, res);
+});
+
+function registerUserInFirebase(usr, res){
+    admin.auth().createUser({
+        email: usr.email,
+        emailVerified: true,
+        phoneNumber: usr.contactNumber,
+        password: usr.password,
+        displayName: usr.name,
+        disabled: false
+    }).then(function(userRecord) {
+        // See the UserRecord reference doc for the contents of userRecord.
+        console.log("Successfully created new user:", userRecord.uid);
+        createUserInFirebase(userRecord, contractor, res);
+    })
+        .catch(function(error) {
+            console.log("Error creating new user:", error);
+            res.status(500);
+            res.send("Error creating Contractor in firebase authentication");
+        });
+}
+
+function createUserInFirebase(userRecord, usr, res){
+    var user = new FirebaseUser(usr, userRecord);
+    admin.database().ref("users/" + user.uniqueId).set(
+        user
+    );
+    res.status(200);
+    res.send("User Created");
 }
 
 module.exports = router;
