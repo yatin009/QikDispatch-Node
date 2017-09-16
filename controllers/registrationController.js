@@ -126,11 +126,10 @@ function createContractorInFirebase(userRecord, contractor, res){
 
     var user = new User(contractorUser, contractor, true);
     admin.database().ref("users/" + contractorUser.uniqueId).set(
-        contractorUser
+        user
     );
-
     res.status(200);
-    res.send("Organization and Agent Created");
+    res.send("Contractor Created");
 }
 
 module.exports = router;
