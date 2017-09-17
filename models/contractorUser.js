@@ -3,7 +3,7 @@
  */
 
 function ContractorUser(contrator, userRecord) {
-    this.agentId = contrator.agentId;
+    this.agentId = userRecord.agentId;
     this.password = userRecord.password;
     this.role = "contractor";
     this.organizationCode = contrator.organizationCode;

@@ -137,12 +137,12 @@ function createContractorInFirebase(userRecord, contractor, res){
 router.post('/register_user', function (req, res) {
     var usr = req.body;
     console.log(usr);
-    registerUserInFirebase(con, res);
+    registerUserInFirebase(usr, res);
 });
 
 function registerUserInFirebase(usr, res){
     admin.auth().createUser({
-        email: usr.email,
+        email: usr.emailId,
         emailVerified: true,
         phoneNumber: usr.contactNumber,
         password: usr.password,
@@ -151,7 +151,7 @@ function registerUserInFirebase(usr, res){
     }).then(function(userRecord) {
         // See the UserRecord reference doc for the contents of userRecord.
         console.log("Successfully created new user:", userRecord.uid);
-        createUserInFirebase(userRecord, contractor, res);
+        createUserInFirebase(userRecord, usr, res);
     })
         .catch(function(error) {
             console.log("Error creating new user:", error);

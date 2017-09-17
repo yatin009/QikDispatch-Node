@@ -10,7 +10,7 @@ function FirebaseUser(usr, userRecord) {
     this.uniqueId = userRecord.uid;
     this.contactNumber = usr.contactNumber;
     this.name = usr.name;
-    this.emailId = usr.email;
+    this.emailId = usr.emailId;
     this.enabled = true
 }
 
