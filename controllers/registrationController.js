@@ -9,6 +9,7 @@ let Contractor = require('../models/contractor.js');
 let User = require('../models/user.js');
 let ContractorUser = require('../models/contractorUser.js');
 let FirebaseUser = require('../models/firebaseUser.js');
+let Company = require('../models/company.js');
 
 const database = admin.database();
 
@@ -136,7 +137,6 @@ function createContractorInFirebase(userRecord, contractor, res){
 
 router.post('/register_user', function (req, res) {
     var usr = req.body;
-    console.log(usr);
     registerUserInFirebase(usr, res);
 });
 
@@ -151,13 +151,25 @@ function registerUserInFirebase(usr, res){
     }).then(function(userRecord) {
         // See the UserRecord reference doc for the contents of userRecord.
         console.log("Successfully created new user:", userRecord.uid);
-        createUserInFirebase(userRecord, usr, res);
+        if(usr.role === "company"){
+            createCompanyInFirebase(userRecord, usr, res);
+        }else{
+            createUserInFirebase(userRecord, usr, res);
+        }
     })
         .catch(function(error) {
             console.log("Error creating new user:", error);
             res.status(500);
             res.send("Error creating Contractor in firebase authentication");
         });
+}
+
+function createCompanyInFirebase(userRecord, usr, res){
+    var company = new Company(usr, userRecord);
+    admin.database().ref("company/" + user.uniqueId).set(
+        company
+    );
+    createUserInFirebase(userRecord, usr, res);
 }
 
 function createUserInFirebase(userRecord, usr, res){
